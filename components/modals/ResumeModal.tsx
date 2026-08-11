@@ -21,7 +21,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     };
   }, [isOpen]);
 
-  const resumePdfUrl = "/assets/resume/Siva_Resume.pdf";
+  const resumePdfUrl = "/assets/resume/Siva_resume.pdf";
 
   const handlePrint = () => {
     window.open(resumePdfUrl, "_blank");
