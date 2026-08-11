@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { fadeInUpVariants, MOTION_EASE } from "./motionVariants";
+import { MOTION_EASE } from "./motionVariants";
 
 interface SectionRevealProps {
   children: ReactNode;
@@ -16,8 +16,8 @@ export default function SectionReveal({
   children,
   className = "",
   delay = 0,
-  yOffset = 24,
-  once = true,
+  yOffset = 20,
+  once = false,
 }: SectionRevealProps) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -31,7 +31,7 @@ export default function SectionReveal({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, amount: 0.15 }}
       transition={{
-        duration: 0.55,
+        duration: 0.5,
         delay,
         ease: MOTION_EASE,
       }}
@@ -41,3 +41,4 @@ export default function SectionReveal({
     </motion.div>
   );
 }
+

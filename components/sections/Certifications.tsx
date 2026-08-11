@@ -76,7 +76,7 @@ export default function Certifications() {
                 key={cert.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between transition-colors duration-200 hover:border-blue-500/30"
@@ -138,7 +138,7 @@ export default function Certifications() {
                 key={cert.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between transition-colors duration-200 hover:border-blue-500/30"

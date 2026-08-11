@@ -13,9 +13,9 @@ import Contact from "@/components/sections/Contact";
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#09090B] text-[#FAFAFA] selection:bg-blue-500/30 selection:text-white flex flex-col">
-      {/* Background Interactive Radial Glow Grid & Canvas Node Field */}
+      {/* Background Interactive Engineering Field & Radial Glow Grid */}
       <MouseGlowGrid />
-      <InteractiveEngineeringField intensity={0.75} />
+      <InteractiveEngineeringField />
 
       {/* Sticky Top Navbar */}
       <Navbar />

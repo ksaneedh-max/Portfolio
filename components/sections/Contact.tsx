@@ -124,7 +124,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.55, ease: MOTION_EASE }}
             className="lg:col-span-5 space-y-6"
           >
@@ -228,7 +228,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.55, delay: 0.1, ease: MOTION_EASE }}
             className="lg:col-span-7"
           >

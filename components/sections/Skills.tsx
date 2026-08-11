@@ -90,7 +90,7 @@ export default function Skills() {
                 key={category.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card transition-all duration-200 hover:border-blue-500/30"

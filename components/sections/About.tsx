@@ -61,8 +61,8 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:col-span-6 flex flex-col"
           >
             <div className="h-full glass-card p-6 sm:p-8 rounded-2xl bg-[#0D0D0F] border border-[#27272A] flex flex-col justify-between space-y-6">
@@ -90,7 +90,7 @@ export default function About() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="flex flex-wrap gap-2.5"
                 >
@@ -113,8 +113,8 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, delay: 0.15 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.12 }}
             className="lg:col-span-6 flex flex-col"
           >
             <div className="h-full glass-card p-6 sm:p-8 rounded-2xl bg-[#0D0D0F] border border-[#27272A] flex flex-col">
@@ -132,10 +132,10 @@ export default function About() {
                     key={item.title}
                     initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.15 }}
                     transition={{
                       duration: 0.4,
-                      delay: 0.2 + idx * 0.08,
+                      delay: 0.15 + idx * 0.07,
                       ease: "easeOut",
                     }}
                     whileHover={{
