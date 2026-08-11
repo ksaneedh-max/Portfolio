@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles, User, Target } from "lucide-react";
+import SectionReveal from "@/components/motion/SectionReveal";
 
 const CAPABILITY_TAGS = [
   "AI / ML",
@@ -43,13 +44,7 @@ export default function About() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* ─── Section Header ─── */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="mb-12 sm:mb-16"
-        >
+        <SectionReveal className="mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>ABOUT ME</span>
@@ -58,16 +53,16 @@ export default function About() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-white tracking-tight leading-[1.15] max-w-3xl">
             Engineering-minded developer building intelligent systems.
           </h2>
-        </motion.div>
+        </SectionReveal>
 
         {/* ─── Two-Column Desktop Layout ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           {/* LEFT COLUMN: WHO I AM */}
           <motion.div
-            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
             className="lg:col-span-6 flex flex-col"
           >
             <div className="h-full glass-card p-6 sm:p-8 rounded-2xl bg-[#0D0D0F] border border-[#27272A] flex flex-col justify-between space-y-6">
@@ -96,16 +91,18 @@ export default function About() {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.25 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                   className="flex flex-wrap gap-2.5"
                 >
                   {CAPABILITY_TAGS.map((tag) => (
-                    <span
+                    <motion.span
                       key={tag}
-                      className="px-3 py-1.5 rounded-lg bg-[#141417] border border-[#27272A] text-xs font-mono font-semibold text-gray-300 hover:text-blue-400 hover:border-blue-500/40 hover:bg-[#18181C] hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(59,130,246,0.15)] transition-all duration-200 cursor-default"
+                      whileHover={{ y: -1.5, scale: 1.02 }}
+                      transition={{ duration: 0.15 }}
+                      className="px-3 py-1.5 rounded-lg bg-[#141417] border border-[#27272A] text-xs font-mono font-semibold text-gray-300 hover:text-blue-400 hover:border-blue-500/40 hover:bg-[#18181C] hover:shadow-[0_0_12px_rgba(59,130,246,0.15)] transition-all duration-200 cursor-default"
                     >
                       {tag}
-                    </span>
+                    </motion.span>
                   ))}
                 </motion.div>
               </div>
@@ -114,10 +111,10 @@ export default function About() {
 
           {/* RIGHT COLUMN: CURRENT FOCUS */}
           <motion.div
-            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.15 }}
             className="lg:col-span-6 flex flex-col"
           >
             <div className="h-full glass-card p-6 sm:p-8 rounded-2xl bg-[#0D0D0F] border border-[#27272A] flex flex-col">
@@ -133,15 +130,21 @@ export default function About() {
                 {FOCUS_AREAS.map((item, idx) => (
                   <motion.div
                     key={item.title}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{
-                      duration: 0.35,
-                      delay: 0.25 + idx * 0.09,
+                      duration: 0.4,
+                      delay: 0.2 + idx * 0.08,
                       ease: "easeOut",
                     }}
-                    className="group p-3 sm:p-3.5 rounded-xl bg-[#141417]/80 hover:bg-[#18181C] border border-[#27272A] hover:border-blue-500/30 transition-all duration-200 flex items-start gap-3.5"
+                    whileHover={{
+                      y: -3,
+                      borderColor: "rgba(59, 130, 246, 0.35)",
+                      boxShadow: "0 4px 20px rgba(59, 130, 246, 0.12)",
+                      transition: { duration: 0.2 },
+                    }}
+                    className="group p-3 sm:p-3.5 rounded-xl bg-[#141417]/80 hover:bg-[#18181C] border border-[#27272A] transition-all duration-200 flex items-start gap-3.5 cursor-default"
                   >
                     <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-mono font-bold flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-200">
                       0{idx + 1}
@@ -164,3 +167,4 @@ export default function About() {
     </section>
   );
 }
+

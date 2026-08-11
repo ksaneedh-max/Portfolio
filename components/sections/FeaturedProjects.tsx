@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { PROJECTS, Project } from "@/data/portfolioData";
 import ProjectCaseStudyModal from "@/components/modals/ProjectCaseStudyModal";
+import SectionReveal from "@/components/motion/SectionReveal";
+import { MOTION_EASE } from "@/components/motion/motionVariants";
 
 // ─── Accent palette per project ───────────────────────────────────────────────
 interface ProjectAccent {
@@ -122,10 +124,20 @@ function DeepfakeIllustration() {
       </defs>
       <rect width="380" height="180" fill="url(#df-bg)" />
 
-      {/* — Input face placeholder — */}
+      {/* — Input face placeholder with subtle scan line animation — */}
       <rect x="18" y="28" width="72" height="72" rx="10" fill="#0D1B2A" stroke="#1D4ED8" strokeWidth="1" strokeOpacity="0.55" />
       <circle cx="54" cy="56" r="19" fill="none" stroke="#2563EB" strokeWidth="1" strokeOpacity="0.45" />
       <line x1="36" y1="73" x2="72" y2="73" stroke="#1D4ED8" strokeWidth="0.8" strokeOpacity="0.35" />
+      {/* Subtle scanning line */}
+      <motion.line
+        x1="20"
+        x2="88"
+        animate={{ y: [30, 98, 30] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+        stroke="#3B82F6"
+        strokeWidth="1.2"
+        strokeOpacity="0.6"
+      />
       <text x="54" y="114" textAnchor="middle" fill="#3B82F6" fontSize="8" fontFamily="monospace" opacity="0.65">INPUT</text>
 
       {/* — CNN conv layers — */}
@@ -157,9 +169,20 @@ function DeepfakeIllustration() {
       ))}
       <line x1="252" y1="64" x2="288" y2="64" stroke="#2563EB" strokeWidth="0.7" strokeOpacity="0.4" strokeDasharray="3,2" />
 
-      {/* — Grad-CAM heatmap — */}
+      {/* — Grad-CAM heatmap with pulse — */}
       <rect x="288" y="28" width="72" height="72" rx="10" fill="url(#heatmap-grad)" opacity="0.82" />
-      <circle cx="324" cy="57" r="19" fill="none" stroke="#60A5FA" strokeWidth="1.2" strokeOpacity="0.9" filter="url(#df-blur)" />
+      <motion.circle
+        cx="324"
+        cy="57"
+        r="19"
+        fill="none"
+        stroke="#60A5FA"
+        strokeWidth="1.2"
+        strokeOpacity="0.9"
+        filter="url(#df-blur)"
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      />
       <circle cx="324" cy="57" r="11" fill="#3B82F6" opacity="0.28" />
       <circle cx="324" cy="57" r="5" fill="#60A5FA" opacity="0.55" />
       <text x="324" y="114" textAnchor="middle" fill="#60A5FA" fontSize="8" fontFamily="monospace" opacity="0.75">GRAD-CAM</text>
@@ -202,15 +225,20 @@ function NLPIllustration() {
       </defs>
       <rect width="380" height="180" fill="url(#nlp-bg)" />
 
-      {/* — Attention matrix — */}
+      {/* — Attention matrix with subtle weight pulse — */}
       {ATTENTION_WEIGHTS.map((row, ri) =>
         row.map((weight, ci) => (
-          <rect
+          <motion.rect
             key={`${ri}-${ci}`}
             x={18 + ci * 22} y={18 + ri * 22}
             width="18" height="18" rx="3"
             fill="#A855F7"
-            opacity={weight * 0.62}
+            animate={{ opacity: [weight * 0.35, weight * 0.7, weight * 0.35] }}
+            transition={{
+              duration: 3 + (ri + ci) * 0.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
         ))
       )}
@@ -307,9 +335,19 @@ function UniversityIllustration() {
       <text x="190" y="147" textAnchor="middle" fill="#34D399" fontSize="8.5" fontFamily="monospace" fontWeight="bold">MySQL</text>
       <text x="190" y="159" textAnchor="middle" fill="#10B981" fontSize="7" fontFamily="monospace" opacity="0.55">Relational Database</text>
 
-      {/* — Connecting lines — */}
-      <line x1="89" y1="120" x2="155" y2="132" stroke="#10B981" strokeWidth="0.8" strokeOpacity="0.38" strokeDasharray="4,3" />
-      <line x1="291" y1="120" x2="225" y2="132" stroke="#10B981" strokeWidth="0.8" strokeOpacity="0.38" strokeDasharray="4,3" />
+      {/* — Connecting lines with animated stroke dash — */}
+      <motion.line
+        x1="89" y1="120" x2="155" y2="132"
+        stroke="#10B981" strokeWidth="0.9" strokeOpacity="0.5" strokeDasharray="4,3"
+        animate={{ strokeDashoffset: [0, -14] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.line
+        x1="291" y1="120" x2="225" y2="132"
+        stroke="#10B981" strokeWidth="0.9" strokeOpacity="0.5" strokeDasharray="4,3"
+        animate={{ strokeDashoffset: [0, -14] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      />
 
       {/* — Python backend badge — */}
       <rect x="153" y="82" width="74" height="22" rx="6" fill="#061810" stroke="#10B981" strokeWidth="0.6" strokeOpacity="0.45" />
@@ -344,7 +382,7 @@ export default function FeaturedProjects() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+          <SectionReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 mb-3">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -361,9 +399,9 @@ export default function FeaturedProjects() {
                 Processing, Explainable AI, and Full-Stack Development.
               </p>
             </div>
-          </div>
+          </SectionReveal>
 
-          {/* Desktop */}
+          {/* Desktop Grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {PROJECTS.map((project, index) => (
               <ProjectCard
@@ -375,7 +413,7 @@ export default function FeaturedProjects() {
             ))}
           </div>
 
-          {/* Mobile */}
+          {/* Mobile Scroll */}
           <div className="md:hidden">
             <div
               className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4"
@@ -410,11 +448,15 @@ export default function FeaturedProjects() {
         </div>
       </section>
 
-      {/* Modal OUTSIDE the section */}
-      <ProjectCaseStudyModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Modal OUTSIDE the section with AnimatePresence */}
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectCaseStudyModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -438,14 +480,19 @@ function ProjectCard({ project, index, onViewCaseStudy }: ProjectCardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: MOTION_EASE }}
+      whileHover={{
+        y: -4,
+        scale: 1.015,
+        transition: { duration: 0.25, ease: MOTION_EASE },
+      }}
       className={[
         "group relative flex flex-col rounded-[24px] bg-[#0D0D0F] border border-[#27272A] overflow-hidden",
-        "transition-all duration-500 ease-out",
-        "hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl",
+        "transition-colors duration-300 ease-out",
+        "hover:shadow-2xl",
         accent.glow,
         accent.hoverBorder,
       ].join(" ")}
@@ -453,7 +500,7 @@ function ProjectCard({ project, index, onViewCaseStudy }: ProjectCardProps) {
     >
       {/* ── Hero Illustration ── */}
       <div className="relative flex-none h-[180px] overflow-hidden bg-[#09090B]">
-        <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.06]">
+        <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.03]">
           {Illustration ? <Illustration /> : null}
         </div>
         {/* Bottom gradient fade into card body */}
@@ -481,9 +528,13 @@ function ProjectCard({ project, index, onViewCaseStudy }: ProjectCardProps) {
         {/* Tech Pills */}
         <div className="flex flex-wrap gap-1.5">
           {cardData.displayTags.map((tag) => (
-            <span key={tag} className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${accent.pill}`}>
+            <motion.span
+              key={tag}
+              whileHover={{ y: -1, scale: 1.03 }}
+              className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${accent.pill}`}
+            >
               {tag}
-            </span>
+            </motion.span>
           ))}
         </div>
 
@@ -505,26 +556,30 @@ function ProjectCard({ project, index, onViewCaseStudy }: ProjectCardProps) {
 
         {/* Buttons */}
         <div className="flex gap-2 mt-auto">
-          <button
+          <motion.button
             id={`view-case-study-${project.id}`}
             onClick={onViewCaseStudy}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.10] border border-white/10 hover:border-white/20 text-xs font-semibold text-white transition-all duration-200"
           >
             View Case Study
             <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </motion.button>
 
           {project.githubUrl && project.githubUrl !== "#" ? (
-            <a
+            <motion.a
               href={project.githubUrl}
               id={`github-link-${project.id}`}
               target="_blank"
               rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-transparent hover:bg-white/[0.04] border border-[#27272A] hover:border-white/20 text-xs font-semibold text-gray-400 hover:text-white transition-all duration-200"
             >
               <GithubIcon className="w-3.5 h-3.5" />
               GitHub
-            </a>
+            </motion.a>
           ) : (
             <button
               disabled
@@ -539,3 +594,4 @@ function ProjectCard({ project, index, onViewCaseStudy }: ProjectCardProps) {
     </motion.div>
   );
 }
+

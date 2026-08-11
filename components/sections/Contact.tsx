@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, FileText, Send, CheckCircle2, Sparkles, Copy, ExternalLink } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import ResumeModal from "@/components/modals/ResumeModal";
 import confetti from "canvas-confetti";
+import SectionReveal from "@/components/motion/SectionReveal";
+import { MOTION_EASE } from "@/components/motion/motionVariants";
 
 const WEB3FORMS_ACCESS_KEY = "48a9fc8d-2bdd-4d8c-bc68-2c0607a3d1c3";
 
@@ -103,7 +105,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="mb-16">
+        <SectionReveal className="mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Get In Touch</span>
@@ -114,15 +116,24 @@ export default function Contact() {
           <p className="text-sm text-gray-400 mt-2 max-w-xl">
             Currently available for AI/ML Engineering & Software Development opportunities. Feel free to connect directly.
           </p>
-        </div>
+        </SectionReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
           {/* Left Column: Direct Contact Info Cards */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, ease: MOTION_EASE }}
+            className="lg:col-span-5 space-y-6"
+          >
 
             {/* Email Card */}
-            <div className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card space-y-3">
+            <motion.div
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card space-y-3 transition-colors duration-200 hover:border-blue-500/30"
+            >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono text-blue-400 font-semibold flex items-center gap-2">
                   <Mail className="w-4 h-4" />
@@ -143,10 +154,13 @@ export default function Contact() {
                 {PERSONAL_INFO.email}
               </a>
               <p className="text-xs text-gray-400">Responds typically within 24 hours.</p>
-            </div>
+            </motion.div>
 
             {/* Phone Card */}
-            <div className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card space-y-3">
+            <motion.div
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card space-y-3 transition-colors duration-200 hover:border-blue-500/30"
+            >
               <span className="text-xs font-mono text-blue-400 font-semibold flex items-center gap-2">
                 <Phone className="w-4 h-4" />
                 Contact Phone
@@ -158,7 +172,7 @@ export default function Contact() {
                 {PERSONAL_INFO.phone}
               </a>
               <p className="text-xs text-gray-400">Available during standard IST hours.</p>
-            </div>
+            </motion.div>
 
             {/* Social Links & Resume Download Card */}
             <div className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card space-y-4">
@@ -193,8 +207,10 @@ export default function Contact() {
                   <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
                 </a>
 
-                <button
+                <motion.button
                   onClick={() => setResumeOpen(true)}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-between p-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs text-white font-semibold shadow-lg shadow-blue-600/20 transition-all"
                 >
                   <span className="flex items-center gap-2">
@@ -202,14 +218,20 @@ export default function Contact() {
                     View & Download Official CV
                   </span>
                   <ExternalLink className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Right Column: Interactive Recruiter Message Form */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: MOTION_EASE }}
+            className="lg:col-span-7"
+          >
             <div className="p-6 sm:p-8 rounded-3xl bg-[#111113] border border-[#27272A] glass-card">
               <h3 className="text-xl font-bold font-heading text-white mb-2">
                 Send a Direct Message
@@ -218,19 +240,23 @@ export default function Contact() {
                 Have a question or role discussion? Fill out the form below to reach Kontham Siva Nagendra Prasad directly.
               </p>
 
-              {formSubmitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-sans text-emerald-300 flex items-center gap-3"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <div>
-                    <span className="font-bold block">Message Transmitted Successfully!</span>
-                    <span>Thank you for reaching out. Kontham Siva Nagendra Prasad will get back to you shortly.</span>
-                  </div>
-                </motion.div>
-              )}
+              <AnimatePresence>
+                {formSubmitted && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                    exit={{ opacity: 0, y: -10, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-sans text-emerald-300 flex items-center gap-3 overflow-hidden"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <div>
+                      <span className="font-bold block">Message Transmitted Successfully!</span>
+                      <span>Thank you for reaching out. Kontham Siva Nagendra Prasad will get back to you shortly.</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -286,9 +312,11 @@ export default function Contact() {
                   />
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
                   disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.015 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-xs font-semibold text-white shadow-xl shadow-blue-600/20 transition-all"
                 >
                   {isSubmitting ? (
@@ -299,16 +327,21 @@ export default function Contact() {
                       Send Message
                     </>
                   )}
-                </button>
+                </motion.button>
               </form>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
       </div>
 
-      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
+      <AnimatePresence>
+        {resumeOpen && (
+          <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
+

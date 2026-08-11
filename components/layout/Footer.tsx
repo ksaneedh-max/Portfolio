@@ -1,8 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ArrowUp, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { PERSONAL_INFO } from "@/data/portfolioData";
+import SectionReveal from "@/components/motion/SectionReveal";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -11,7 +13,7 @@ export default function Footer() {
 
   return (
     <footer className="py-12 border-t border-[#27272A] bg-[#09090B] relative z-10 text-xs font-sans text-gray-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <SectionReveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Left: Branding & Status */}
         <div className="space-y-1 text-center sm:text-left">
@@ -26,45 +28,51 @@ export default function Footer() {
 
         {/* Center: Social Icons */}
         <div className="flex items-center gap-4">
-          <a
+          <motion.a
             href={PERSONAL_INFO.github}
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{ y: -2, scale: 1.05 }}
             className="p-2 rounded-lg bg-[#141417] hover:bg-[#27272A] border border-[#27272A] text-gray-400 hover:text-white transition-colors"
             title="GitHub"
           >
             <GithubIcon className="w-4 h-4" />
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href={PERSONAL_INFO.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{ y: -2, scale: 1.05 }}
             className="p-2 rounded-lg bg-[#141417] hover:bg-[#27272A] border border-[#27272A] text-blue-400 hover:text-blue-300 transition-colors"
             title="LinkedIn"
           >
             <LinkedinIcon className="w-4 h-4" />
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href={`mailto:${PERSONAL_INFO.email}`}
+            whileHover={{ y: -2, scale: 1.05 }}
             className="p-2 rounded-lg bg-[#141417] hover:bg-[#27272A] border border-[#27272A] text-gray-400 hover:text-white transition-colors"
             title="Email"
           >
             <Mail className="w-4 h-4" />
-          </a>
+          </motion.a>
         </div>
 
         {/* Right: Back to top */}
-        <button
+        <motion.button
           onClick={scrollToTop}
+          whileHover={{ y: -2, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141417] hover:bg-[#27272A] border border-[#27272A] text-gray-300 hover:text-white transition-colors"
         >
           <span>Back to top</span>
           <ArrowUp className="w-3.5 h-3.5" />
-        </button>
+        </motion.button>
 
-      </div>
+      </SectionReveal>
     </footer>
   );
 }
+

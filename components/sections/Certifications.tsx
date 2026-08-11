@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CERTIFICATIONS, Certification } from "@/data/portfolioData";
 import { Award, ExternalLink, Sparkles } from "lucide-react";
-import { SiSap } from "react-icons/si";
 import CertificationModal from "@/components/modals/CertificationModal";
+import SectionReveal from "@/components/motion/SectionReveal";
+import { MOTION_EASE } from "@/components/motion/motionVariants";
 
 export default function Certifications() {
   const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
@@ -53,7 +54,7 @@ export default function Certifications() {
     <section id="certifications" className="py-24 relative z-10 border-t border-[#27272A]/50 bg-[#09090B]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-16">
+        <SectionReveal className="mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Global Certifications & Professional Credentials</span>
@@ -64,7 +65,7 @@ export default function Certifications() {
           <p className="text-sm text-gray-400 mt-2 max-w-3xl">
             Industry-recognized certifications demonstrating expertise in Artificial Intelligence, Cloud Computing, Machine Learning, Enterprise AI, and Modern Software Development.
           </p>
-        </div>
+        </SectionReveal>
 
         {/* Global Certifications */}
         <div className="mb-12">
@@ -73,11 +74,12 @@ export default function Certifications() {
             {globalCerts.map((cert, idx) => (
               <motion.div
                 key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between"
+                transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between transition-colors duration-200 hover:border-blue-500/30"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -134,11 +136,12 @@ export default function Certifications() {
             {academicCerts.map((cert, idx) => (
               <motion.div
                 key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between"
+                transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card flex flex-col justify-between transition-colors duration-200 hover:border-blue-500/30"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -189,8 +192,13 @@ export default function Certifications() {
         </div>
       </div>
 
-      {/* Verification Modal */}
-      <CertificationModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
+      {/* Verification Modal with AnimatePresence */}
+      <AnimatePresence>
+        {selectedCert && (
+          <CertificationModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
+

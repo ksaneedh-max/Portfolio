@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SKILL_CATEGORIES } from "@/data/portfolioData";
 import { Code2, Brain, Boxes, Wrench, Search, CheckCircle2, Sparkles } from "lucide-react";
+import SectionReveal from "@/components/motion/SectionReveal";
+import { MOTION_EASE } from "@/components/motion/motionVariants";
 
 export default function Skills() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -35,7 +37,7 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <SectionReveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
@@ -60,7 +62,7 @@ export default function Skills() {
               className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#141417] border border-[#27272A] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
-        </div>
+        </SectionReveal>
 
         {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-6 border-b border-[#27272A] mb-8">
@@ -81,16 +83,17 @@ export default function Skills() {
 
         {/* Categorized Skills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredCategories.map((category) => {
+          {filteredCategories.map((category, idx) => {
             const IconComponent = iconMap[category.icon] || Code2;
             return (
               <motion.div
                 key={category.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card"
+                transition={{ duration: 0.45, delay: idx * 0.1, ease: MOTION_EASE }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-6 rounded-2xl bg-[#111113] border border-[#27272A] glass-card transition-all duration-200 hover:border-blue-500/30"
               >
                 <div className="flex items-center gap-3 mb-6 border-b border-[#27272A] pb-4">
                   <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -109,9 +112,11 @@ export default function Skills() {
                   {category.skills.map((skill) => {
                     const isSelected = selectedSkill?.name === skill.name;
                     return (
-                      <button
+                      <motion.button
                         key={skill.name}
                         onClick={() => setSelectedSkill(isSelected ? null : skill)}
+                        whileHover={{ y: -1.5, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all flex items-center gap-2 border ${
                           isSelected
                             ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/25"
@@ -120,7 +125,7 @@ export default function Skills() {
                       >
                         <span>{skill.name}</span>
                         <span className="text-[10px] opacity-60 font-sans">({skill.level})</span>
-                      </button>
+                      </motion.button>
                     );
                   })}
                 </div>
@@ -130,30 +135,35 @@ export default function Skills() {
         </div>
 
         {/* Selected Skill Information Tooltip Banner */}
-        {selectedSkill && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-8 p-4 rounded-xl bg-[#141417] border border-blue-500/30 flex items-center justify-between gap-4 text-xs font-sans"
-          >
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
-              <div>
-                <span className="font-bold text-white font-mono">{selectedSkill.name}</span>
-                <span className="text-gray-400 ml-2 font-mono text-[11px]">— Level: {selectedSkill.level}</span>
-                <p className="text-gray-300 mt-0.5 text-xs">{selectedSkill.description}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setSelectedSkill(null)}
-              className="text-gray-500 hover:text-white text-xs font-mono underline"
+        <AnimatePresence>
+          {selectedSkill && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.25 }}
+              className="mt-8 p-4 rounded-xl bg-[#141417] border border-blue-500/30 flex items-center justify-between gap-4 text-xs font-sans shadow-lg shadow-blue-600/10"
             >
-              Dismiss
-            </button>
-          </motion.div>
-        )}
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
+                <div>
+                  <span className="font-bold text-white font-mono">{selectedSkill.name}</span>
+                  <span className="text-gray-400 ml-2 font-mono text-[11px]">— Level: {selectedSkill.level}</span>
+                  <p className="text-gray-300 mt-0.5 text-xs">{selectedSkill.description}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedSkill(null)}
+                className="text-gray-500 hover:text-white text-xs font-mono underline"
+              >
+                Dismiss
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
   );
 }
+
