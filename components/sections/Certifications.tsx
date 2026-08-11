@@ -51,7 +51,7 @@ export default function Certifications() {
   const academicCerts = CERTIFICATIONS.filter(c => c.id === "nptel-ml");
 
   return (
-    <section id="certifications" className="py-24 relative z-10 border-t border-[#27272A]/50 bg-[#09090B]">
+    <section id="certifications" className="py-24 relative z-10 border-t border-[#27272A]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <SectionReveal className="mb-16">

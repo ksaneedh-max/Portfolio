@@ -33,7 +33,7 @@ export default function Skills() {
   }).filter((cat) => cat.skills.length > 0);
 
   return (
-    <section id="skills" className="py-24 relative z-10 border-t border-[#27272A]/50 bg-[#09090B]">
+    <section id="skills" className="py-24 relative z-10 border-t border-[#27272A]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

@@ -40,7 +40,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-16 sm:py-24 bg-[#09090B] border-t border-[#27272A]/50 overflow-x-clip"
+      className="relative py-16 sm:py-24 border-t border-[#27272A]/50 overflow-x-clip"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* ─── Section Header ─── */}

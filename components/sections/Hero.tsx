@@ -13,7 +13,11 @@ import {
   staggerContainerVariants,
 } from "@/components/motion/motionVariants";
 
-export default function Hero() {
+interface HeroProps {
+  isPreloaderDone?: boolean;
+}
+
+export default function Hero({ isPreloaderDone = true }: HeroProps) {
   const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
@@ -22,7 +26,7 @@ export default function Hero() {
         <motion.div
           variants={staggerContainerVariants}
           initial="hidden"
-          animate="visible"
+          animate={isPreloaderDone ? "visible" : "hidden"}
           className="max-w-4xl mx-auto text-center space-y-8"
         >
           {/* 1. Academic Badge */}

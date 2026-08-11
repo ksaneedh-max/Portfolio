@@ -19,7 +19,7 @@ export default function Education() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="education" className="py-24 relative z-10 border-t border-[#27272A]/50 bg-[#09090B]">
+    <section id="education" className="py-24 relative z-10 border-t border-[#27272A]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

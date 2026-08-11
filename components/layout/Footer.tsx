@@ -12,7 +12,7 @@ export default function Footer() {
   };
 
   return (
-    <footer id="footer" className="py-12 border-t border-[#27272A] bg-[#09090B] relative z-10 text-xs font-sans text-gray-400">
+    <footer id="footer" className="py-12 border-t border-[#27272A] relative z-10 text-xs font-sans text-gray-400">
       <SectionReveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Left: Branding & Status */}
